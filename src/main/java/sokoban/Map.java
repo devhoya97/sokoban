@@ -1,2 +1,7 @@
-package sokoban;public class Map {
+package sokoban;
+
+public class Map {
+    public Map(String map) {
+
+    }
 }
