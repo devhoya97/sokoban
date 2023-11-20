@@ -14,6 +14,7 @@ public class Application {
         System.out.println(stage2.getHallCount());
         System.out.println(stage2.getBallCount());
         System.out.println(stage2.getPlayerPosition());
+        printGameMap(stage2);
 
 
     }
@@ -40,5 +41,19 @@ public class Application {
             gameMapStages.add(new GameMap(gameMapStage));
         }
         return gameMapStages;
+    }
+
+    private static void printGameMap(GameMap gameMap) {
+        for (List<Integer> gameMapRow : gameMap.getGameMap()) {
+            gameMapRow.stream()
+                    .map(MapElement::matchWithMappingValue)
+                    .map(MapElement::getSymbol)
+                    .forEach(System.out::print);
+            System.out.println();
+        }
+    }
+
+    private static void printGameMapSummary() {
+
     }
 }

@@ -23,9 +23,18 @@ public enum MapElement {
         return mappingValue;
     }
 
-    public static MapElement match(String symbol) {
+    public static MapElement matchWithSymbol(String symbol) {
         for (MapElement mapElement : MapElement.values()) {
             if (symbol.equals(mapElement.symbol)) {
+                return mapElement;
+            }
+        }
+        throw new IllegalArgumentException("유효한 맵 요소가 아닙니다.");
+    }
+
+    public static MapElement matchWithMappingValue(Integer mappingValue) {
+        for (MapElement mapElement : MapElement.values()) {
+            if (mappingValue.equals(mapElement.mappingValue)) {
                 return mapElement;
             }
         }

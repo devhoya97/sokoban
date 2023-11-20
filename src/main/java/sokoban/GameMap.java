@@ -26,7 +26,7 @@ public class GameMap {
         List<Integer> gameMapRow = new ArrayList<>();
         for (int index = 0; index < rawGameMapRow.length(); index++) {
             String symbol = String.valueOf(rawGameMapRow.charAt(index));
-            MapElement mapElement = MapElement.match(symbol);
+            MapElement mapElement = MapElement.matchWithSymbol(symbol);
             gameMapRow.add(mapElement.getMappingValue());
         }
         return gameMapRow;
