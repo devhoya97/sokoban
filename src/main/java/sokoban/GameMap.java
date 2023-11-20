@@ -32,7 +32,53 @@ public class GameMap {
         return gameMapRow;
     }
 
+    public int getHorizontalSize() {
+        return gameMap.stream()
+                .mapToInt(List::size)
+                .max()
+                .orElseThrow();
+    }
+
+    public int getVerticalSize() {
+        return gameMap.size();
+    }
+
+    public int getHallCount() {
+        long hallCount = 0;
+        for (List<Integer> gameMapRow : gameMap) {
+            hallCount += gameMapRow.stream()
+                    .filter(mappingValue -> mappingValue == MapElement.HALL.getMappingValue())
+                    .count();
+        }
+        return (int) hallCount;
+    }
+
+    public int getBallCount() {
+        long BallCount = 0;
+        for (List<Integer> gameMapRow : gameMap) {
+            BallCount += gameMapRow.stream()
+                    .filter(mappingValue -> mappingValue == MapElement.BALL.getMappingValue())
+                    .count();
+        }
+        return (int) BallCount;
+    }
+
+    public List<Integer> getPlayerPosition() {
+        for (int rowIndex = 0; rowIndex < gameMap.size(); rowIndex++) {
+            List<Integer> gameMapRow = gameMap.get(rowIndex);
+            if (gameMapRow.contains(MapElement.PLAYER.getMappingValue())) {
+                return List.of(rowIndex + 1, gameMapRow.indexOf(MapElement.PLAYER.getMappingValue()) + 1);
+            }
+        }
+        throw new IllegalArgumentException("맵에 플레이어가 없습니다.");
+    }
+
+    //view를 위한 getter
     public List<List<Integer>> getGameMap() {
         return gameMap;
+    }
+
+    public String getStageMessage() {
+        return stageMessage;
     }
 }

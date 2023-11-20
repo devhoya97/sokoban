@@ -8,10 +8,13 @@ public class Application {
 
     public static void main(String[] args) {
         List<GameMap> gameMaps = getGameMaps();
-        List<List<Integer>> stage1GameMap = gameMaps.get(0).getGameMap();
-        stage1GameMap.forEach(System.out::println);
-        List<List<Integer>> stage2GameMap = gameMaps.get(1).getGameMap();
-        stage2GameMap.forEach(System.out::println);
+        GameMap stage2 = gameMaps.get(1);
+        System.out.println(stage2.getHorizontalSize());
+        System.out.println(stage2.getVerticalSize());
+        System.out.println(stage2.getHallCount());
+        System.out.println(stage2.getBallCount());
+        System.out.println(stage2.getPlayerPosition());
+
 
     }
 
