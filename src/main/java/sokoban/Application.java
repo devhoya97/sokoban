@@ -4,19 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Application {
+    private static final String NEW_LINE = "\n";
+    private static final String DOUBLE_NEW_LINE = "\n\n";
     private static final String STAGE_DELIMITER = "=====";
 
     public static void main(String[] args) {
         List<GameMap> gameMaps = getGameMaps();
-        GameMap stage2 = gameMaps.get(1);
-        System.out.println(stage2.getHorizontalSize());
-        System.out.println(stage2.getVerticalSize());
-        System.out.println(stage2.getHallCount());
-        System.out.println(stage2.getBallCount());
-        System.out.println(stage2.getPlayerPosition());
-        printGameMap(stage2);
-
-
+        printAll(gameMaps);
     }
 
     private static List<GameMap> getGameMaps() {
@@ -43,17 +37,40 @@ public class Application {
         return gameMapStages;
     }
 
+    private static void printAll(List<GameMap> gameMaps) {
+        for (GameMap gameMap : gameMaps) {
+            printGameMap(gameMap);
+            printGameMapSummary(gameMap);
+        }
+    }
+
     private static void printGameMap(GameMap gameMap) {
+        StringBuilder totalMessage = new StringBuilder();
+        totalMessage.append(gameMap.getStageMessage()).append(DOUBLE_NEW_LINE);
         for (List<Integer> gameMapRow : gameMap.getGameMap()) {
             gameMapRow.stream()
                     .map(MapElement::matchWithMappingValue)
                     .map(MapElement::getSymbol)
-                    .forEach(System.out::print);
-            System.out.println();
+                    .forEach(totalMessage::append);
+            totalMessage.append(NEW_LINE);
         }
+        System.out.println(totalMessage);
     }
 
-    private static void printGameMapSummary() {
-
+    private static void printGameMapSummary(GameMap gameMap) {
+        StringBuilder totalMessage = new StringBuilder();
+        totalMessage.append("가로크기: ")
+                .append(gameMap.getHorizontalSize()).append(NEW_LINE);
+        totalMessage.append("세로크기: ")
+                .append(gameMap.getVerticalSize()).append(NEW_LINE);
+        totalMessage.append("구멍의 수: ")
+                .append(gameMap.getHallCount()).append(NEW_LINE);
+        totalMessage.append("공의 수: ")
+                .append(gameMap.getBallCount()).append(NEW_LINE);
+        totalMessage.append("플레이어 위치: ")
+                .append(gameMap.getPlayerPosition().get(0)).append("행 ")
+                .append(gameMap.getPlayerPosition().get(1)).append("열")
+                .append(NEW_LINE);
+        System.out.println(totalMessage);
     }
 }
