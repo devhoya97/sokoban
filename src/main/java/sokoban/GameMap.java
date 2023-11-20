@@ -8,10 +8,9 @@ public class GameMap {
     private static final String MAP_DELIMITER = "\n";
     private List<List<Integer>> gameMap;
     private String stageMessage;
-    public GameMap(String gameMapStage) {
-        String[] gameMapStageRows = gameMapStage.split(MAP_DELIMITER);
-        this.stageMessage = gameMapStageRows[0];
-        this.gameMap = translateToGameMap(Arrays.copyOfRange(gameMapStageRows, 1, gameMapStageRows.length));
+    public GameMap(String stageMessage, String rawGameMap) {
+        this.stageMessage = stageMessage;
+        this.gameMap = translateToGameMap(rawGameMap.split(MAP_DELIMITER));
     }
 
     private List<List<Integer>> translateToGameMap(String[] rawGameMap) {

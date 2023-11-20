@@ -14,8 +14,8 @@ public class Application {
     }
 
     private static List<GameMap> getGameMaps() {
-        List<GameMap> gameMapStages = new ArrayList<>();
-        String totalGameMapStage =
+        List<GameMap> gameMaps = new ArrayList<>();
+        String totalGameMapsOfStages =
                 """
                         Stage 1
                         #####
@@ -31,10 +31,13 @@ public class Application {
                          ########
                          """
         ;
-        for (String gameMapStage : totalGameMapStage.split(STAGE_DELIMITER)) {
-            gameMapStages.add(new GameMap(gameMapStage));
+        for (String stageMessageAndRawGameMap : totalGameMapsOfStages.split(STAGE_DELIMITER)) {
+            int stageMessageEndIndex = stageMessageAndRawGameMap.indexOf(NEW_LINE);
+            String stageMessage = stageMessageAndRawGameMap.substring(0, stageMessageEndIndex);
+            String rawGameMap = stageMessageAndRawGameMap.substring(stageMessageEndIndex + 1);
+            gameMaps.add(new GameMap(stageMessage, rawGameMap));
         }
-        return gameMapStages;
+        return gameMaps;
     }
 
     private static void printAll(List<GameMap> gameMaps) {
