@@ -18,13 +18,13 @@ public class OutputView {
         Direction direction = Direction.match(symbol);
         if (direction != null) {
             if (canMove) {
-                System.out.println(Character.toUpperCase(direction.getSymbol()) + ": " + direction.getMoveMessage());
+                System.out.println(Character.toUpperCase(symbol) + ": " + direction.getMoveMessage() + NEW_LINE);
                 return;
             }
-            System.out.println(Character.toUpperCase(direction.getSymbol()) + ": (경고!) 해당 명령을 수행할 수 없습니다!");
+            System.out.println(Character.toUpperCase(symbol) + ": (경고!) 해당 명령을 수행할 수 없습니다!" + NEW_LINE);
             return;
         }
-        System.out.println(Character.toUpperCase(symbol) + ": (경고) 지원하지 않는 명령입니다!");
+        System.out.println(Character.toUpperCase(symbol) + ": (경고) 지원하지 않는 명령입니다!" + NEW_LINE);
     }
 
     public static void printGameOver() {
