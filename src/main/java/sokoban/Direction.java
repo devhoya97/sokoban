@@ -24,7 +24,7 @@ public enum Direction {
 
     public static Direction match(char symbol) {
         for (Direction direction : Direction.values()) {
-            if (direction.symbol == symbol) {
+            if (direction.symbol == Character.toLowerCase(symbol)) {
                 return direction;
             }
         }

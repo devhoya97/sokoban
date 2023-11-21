@@ -2,6 +2,7 @@ package sokoban;
 
 import java.util.ArrayList;
 import java.util.List;
+import sokoban.view.OutputView;
 
 public class GameMap {
     private static final String MAP_DELIMITER = "\n";
@@ -32,10 +33,6 @@ public class GameMap {
 
     public boolean move(char symbol) {
         Direction direction = Direction.match(symbol);
-        if (direction == null) {
-            return false;
-        }
-        List<Integer> playerPosition = getPlayerPosition();
         if (direction == Direction.UP) {
             return moveUp();
         }
@@ -48,18 +45,55 @@ public class GameMap {
         if (direction == Direction.RIGHT) {
             return moveRight();
         }
+        return false;
     }
 
     private boolean moveUp() {
+        List<Integer> playerPosition = getPlayerPosition();
+        int playerRowIndex = playerPosition.get(0);
+        int playerColumnIndex = playerPosition.get(1);
+        if (gameMap.get(playerRowIndex - 1).get(playerColumnIndex) != MapElement.EMPTY_SPACE.getMappingValue()) {
+            return false;
+        }
+        gameMap.get(playerRowIndex - 1).set(playerColumnIndex, MapElement.PLAYER.getMappingValue());
+        gameMap.get(playerRowIndex).set(playerColumnIndex, MapElement.EMPTY_SPACE.getMappingValue());
+        return true;
     }
 
     private boolean moveDown() {
+        List<Integer> playerPosition = getPlayerPosition();
+        int playerRowIndex = playerPosition.get(0);
+        int playerColumnIndex = playerPosition.get(1);
+        if (gameMap.get(playerRowIndex + 1).get(playerColumnIndex) != MapElement.EMPTY_SPACE.getMappingValue()) {
+            return false;
+        }
+        gameMap.get(playerRowIndex + 1).set(playerColumnIndex, MapElement.PLAYER.getMappingValue());
+        gameMap.get(playerRowIndex).set(playerColumnIndex, MapElement.EMPTY_SPACE.getMappingValue());
+        return true;
     }
 
     private boolean moveLeft() {
+        List<Integer> playerPosition = getPlayerPosition();
+        int playerRowIndex = playerPosition.get(0);
+        int playerColumnIndex = playerPosition.get(1);
+        if (gameMap.get(playerRowIndex).get(playerColumnIndex - 1) != MapElement.EMPTY_SPACE.getMappingValue()) {
+            return false;
+        }
+        gameMap.get(playerRowIndex).set(playerColumnIndex - 1, MapElement.PLAYER.getMappingValue());
+        gameMap.get(playerRowIndex).set(playerColumnIndex, MapElement.EMPTY_SPACE.getMappingValue());
+        return true;
     }
-    
+
     private boolean moveRight() {
+        List<Integer> playerPosition = getPlayerPosition();
+        int playerRowIndex = playerPosition.get(0);
+        int playerColumnIndex = playerPosition.get(1);
+        if (gameMap.get(playerRowIndex).get(playerColumnIndex + 1) != MapElement.EMPTY_SPACE.getMappingValue()) {
+            return false;
+        }
+        gameMap.get(playerRowIndex).set(playerColumnIndex + 1, MapElement.PLAYER.getMappingValue());
+        gameMap.get(playerRowIndex).set(playerColumnIndex, MapElement.EMPTY_SPACE.getMappingValue());
+        return true;
     }
 
     public List<Integer> getPlayerPosition() {
