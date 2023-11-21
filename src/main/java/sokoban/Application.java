@@ -8,20 +8,25 @@ import sokoban.view.OutputView;
 public class Application {
     private static final String NEW_LINE = "\n";
     private static final String STAGE_DELIMITER = "=====";
-    private static final char QUIT = 'q';
+    private static final char QUIT = 'Q';
 
     public static void main(String[] args) {
-        GameMap gameMap = getGameMaps().get(1);
-        OutputView.printGameStart(gameMap);
+        GameMap stage2GameMap = getGameMaps().get(1);
+        OutputView.printGameStart(stage2GameMap);
         while (true) {
             String userInput = InputView.getUserInput();
             for (char symbol : userInput.toCharArray()) {
+                if (!Character.isLetter(symbol)) {
+                    OutputView.printNotSupportedInput(symbol);
+                    continue;
+                }
+                symbol = Character.toUpperCase(symbol);
                 if (symbol == QUIT) {
                     OutputView.printGameOver();
                     return;
                 }
-                boolean canMove = gameMap.move(symbol);
-                OutputView.printResult(gameMap, symbol, canMove);
+                boolean canMove = stage2GameMap.move(symbol);
+                OutputView.printResult(stage2GameMap, symbol, canMove);
             }
         }
     }
