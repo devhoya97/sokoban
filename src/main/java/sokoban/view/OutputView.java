@@ -24,7 +24,7 @@ public class OutputView {
             System.out.println(Character.toUpperCase(direction.getSymbol()) + ": (경고!) 해당 명령을 수행할 수 없습니다!");
             return;
         }
-        System.out.println(symbol + ": (경고) 지원하지 않는 명령입니다!");
+        System.out.println(Character.toUpperCase(symbol) + ": (경고) 지원하지 않는 명령입니다!");
     }
 
     public static void printGameOver() {

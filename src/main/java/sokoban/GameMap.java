@@ -1,7 +1,6 @@
 package sokoban;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameMap {
@@ -31,42 +30,43 @@ public class GameMap {
         return gameMapRow;
     }
 
-    public int getHorizontalSize() {
-        return gameMap.stream()
-                .mapToInt(List::size)
-                .max()
-                .orElseThrow();
-    }
-
-    public int getVerticalSize() {
-        return gameMap.size();
-    }
-
-    public int getHallCount() {
-        long hallCount = 0;
-        for (List<Integer> gameMapRow : gameMap) {
-            hallCount += gameMapRow.stream()
-                    .filter(mappingValue -> mappingValue == MapElement.HALL.getMappingValue())
-                    .count();
+    public boolean move(char symbol) {
+        Direction direction = Direction.match(symbol);
+        if (direction == null) {
+            return false;
         }
-        return (int) hallCount;
+        List<Integer> playerPosition = getPlayerPosition();
+        if (direction == Direction.UP) {
+            return moveUp();
+        }
+        if (direction == Direction.DOWN) {
+            return moveDown();
+        }
+        if (direction == Direction.LEFT) {
+            return moveLeft();
+        }
+        if (direction == Direction.RIGHT) {
+            return moveRight();
+        }
     }
 
-    public int getBallCount() {
-        long BallCount = 0;
-        for (List<Integer> gameMapRow : gameMap) {
-            BallCount += gameMapRow.stream()
-                    .filter(mappingValue -> mappingValue == MapElement.BALL.getMappingValue())
-                    .count();
-        }
-        return (int) BallCount;
+    private boolean moveUp() {
+    }
+
+    private boolean moveDown() {
+    }
+
+    private boolean moveLeft() {
+    }
+
+    private boolean moveRight() {
     }
 
     public List<Integer> getPlayerPosition() {
         for (int rowIndex = 0; rowIndex < gameMap.size(); rowIndex++) {
             List<Integer> gameMapRow = gameMap.get(rowIndex);
             if (gameMapRow.contains(MapElement.PLAYER.getMappingValue())) {
-                return List.of(rowIndex + 1, gameMapRow.indexOf(MapElement.PLAYER.getMappingValue()) + 1);
+                return List.of(rowIndex, gameMapRow.indexOf(MapElement.PLAYER.getMappingValue()));
             }
         }
         throw new IllegalArgumentException("맵에 플레이어가 없습니다.");
