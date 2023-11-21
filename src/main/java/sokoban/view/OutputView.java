@@ -27,6 +27,10 @@ public class OutputView {
         System.out.println(symbol + ": (경고) 지원하지 않는 명령입니다!");
     }
 
+    public static void printGameOver() {
+        System.out.println("Bye~");
+    }
+
     public static void printGameMap(GameMap gameMap) {
         StringBuilder totalMessage = new StringBuilder();
         for (List<Integer> gameMapRow : gameMap.getGameMap()) {
