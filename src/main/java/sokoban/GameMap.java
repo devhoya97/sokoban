@@ -58,7 +58,7 @@ public class GameMap {
 
     private boolean moveLeft() {
     }
-
+    
     private boolean moveRight() {
     }
 
