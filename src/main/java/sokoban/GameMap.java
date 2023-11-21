@@ -32,68 +32,61 @@ public class GameMap {
     }
 
     public boolean move(char symbol) {
+        List<Integer> playerPosition = getPlayerPosition();
+        int playerRowIndex = playerPosition.get(0);
+        int playerColumnIndex = playerPosition.get(1);
+
         Direction direction = Direction.match(symbol);
         if (direction == Direction.UP) {
-            return moveUp();
+            return moveUp(playerRowIndex, playerColumnIndex);
         }
         if (direction == Direction.DOWN) {
-            return moveDown();
+            return moveDown(playerRowIndex, playerColumnIndex);
         }
         if (direction == Direction.LEFT) {
-            return moveLeft();
+            return moveLeft(playerRowIndex, playerColumnIndex);
         }
         if (direction == Direction.RIGHT) {
-            return moveRight();
+            return moveRight(playerRowIndex, playerColumnIndex);
         }
         return false;
     }
 
-    private boolean moveUp() {
-        List<Integer> playerPosition = getPlayerPosition();
-        int playerRowIndex = playerPosition.get(0);
-        int playerColumnIndex = playerPosition.get(1);
+    private boolean moveUp(int playerRowIndex, int playerColumnIndex) {
         if (gameMap.get(playerRowIndex - 1).get(playerColumnIndex) != MapElement.EMPTY_SPACE.getMappingValue()) {
             return false;
         }
-        gameMap.get(playerRowIndex - 1).set(playerColumnIndex, MapElement.PLAYER.getMappingValue());
-        gameMap.get(playerRowIndex).set(playerColumnIndex, MapElement.EMPTY_SPACE.getMappingValue());
+        changePosition(playerRowIndex, playerColumnIndex, playerRowIndex - 1, playerColumnIndex);
         return true;
     }
 
-    private boolean moveDown() {
-        List<Integer> playerPosition = getPlayerPosition();
-        int playerRowIndex = playerPosition.get(0);
-        int playerColumnIndex = playerPosition.get(1);
+    private boolean moveDown(int playerRowIndex, int playerColumnIndex) {
         if (gameMap.get(playerRowIndex + 1).get(playerColumnIndex) != MapElement.EMPTY_SPACE.getMappingValue()) {
             return false;
         }
-        gameMap.get(playerRowIndex + 1).set(playerColumnIndex, MapElement.PLAYER.getMappingValue());
-        gameMap.get(playerRowIndex).set(playerColumnIndex, MapElement.EMPTY_SPACE.getMappingValue());
+        changePosition(playerRowIndex, playerColumnIndex, playerRowIndex + 1, playerColumnIndex);
         return true;
     }
 
-    private boolean moveLeft() {
-        List<Integer> playerPosition = getPlayerPosition();
-        int playerRowIndex = playerPosition.get(0);
-        int playerColumnIndex = playerPosition.get(1);
+    private boolean moveLeft(int playerRowIndex, int playerColumnIndex) {
         if (gameMap.get(playerRowIndex).get(playerColumnIndex - 1) != MapElement.EMPTY_SPACE.getMappingValue()) {
             return false;
         }
-        gameMap.get(playerRowIndex).set(playerColumnIndex - 1, MapElement.PLAYER.getMappingValue());
-        gameMap.get(playerRowIndex).set(playerColumnIndex, MapElement.EMPTY_SPACE.getMappingValue());
+        changePosition(playerRowIndex, playerColumnIndex, playerRowIndex, playerColumnIndex - 1);
         return true;
     }
 
-    private boolean moveRight() {
-        List<Integer> playerPosition = getPlayerPosition();
-        int playerRowIndex = playerPosition.get(0);
-        int playerColumnIndex = playerPosition.get(1);
+    private boolean moveRight(int playerRowIndex, int playerColumnIndex) {
         if (gameMap.get(playerRowIndex).get(playerColumnIndex + 1) != MapElement.EMPTY_SPACE.getMappingValue()) {
             return false;
         }
-        gameMap.get(playerRowIndex).set(playerColumnIndex + 1, MapElement.PLAYER.getMappingValue());
-        gameMap.get(playerRowIndex).set(playerColumnIndex, MapElement.EMPTY_SPACE.getMappingValue());
+        changePosition(playerRowIndex, playerColumnIndex, playerRowIndex, playerColumnIndex + 1);
         return true;
+    }
+
+    private void changePosition(int playerRowIndex, int playerColumnIndex, int targetRowIndex, int targetColumnIndex) {
+        gameMap.get(targetRowIndex).set(targetColumnIndex, MapElement.PLAYER.getMappingValue());
+        gameMap.get(playerRowIndex).set(playerColumnIndex, MapElement.EMPTY_SPACE.getMappingValue());
     }
 
     public List<Integer> getPlayerPosition() {
